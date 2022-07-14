@@ -11,7 +11,7 @@ The app is built using the Vue 3 framework, using the Composition API.
 ### Pinia
 
 #### Pinia Plugin Persistedstate
-[Github] (https://github.com/prazdevs/pinia-plugin-persistedstate)
+[Github](https://github.com/prazdevs/pinia-plugin-persistedstate)
 
 ### Tailwind CSS
 It uses Tailwind, mainly to get to know it and see if I like it.
@@ -22,6 +22,9 @@ It uses VeeValidate and Yup for form validation.
 ### Firebase
 #### Firebase/authentication
 #### Firebase/Firestore
+
+### Vue-toastification
+[Documentation](https://openbase.com/js/vue-toastification)
 
 ## Scripts
 

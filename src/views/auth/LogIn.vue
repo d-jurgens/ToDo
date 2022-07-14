@@ -20,6 +20,7 @@
 </template>
 
 <script setup lang="ts">
+import { useRouter } from "vue-router";
 import { useForm } from "vee-validate";
 import { auth } from "@/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -31,6 +32,7 @@ import UiTextInput from "@/components/ui/UiTextInput.vue";
 import UiButton from "@/components/ui/UiButton.vue";
 import UiCard from "@/components/ui/UiCard.vue";
 
+const router = useRouter();
 const { handleSubmit, isSubmitting } = useForm();
 const toast = useToast();
 const userStore = useUserStore();
@@ -51,12 +53,15 @@ const onSubmit = handleSubmit(async (values) => {
       values.email,
       values.password
     );
+
     // Add the credentials to the user store
     userStore.$state = {
       displayName: userCredentials.user.displayName,
       email: userCredentials.user.email,
       uid: userCredentials.user.uid,
+      emailVerified: userCredentials.user.emailVerified,
     };
+    router.push("/");
   } catch {
     // Show a generic error message when something goes wrong while signing in
     toast.error("Somthing went wrong when singing in, please try again");
