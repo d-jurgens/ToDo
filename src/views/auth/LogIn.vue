@@ -21,14 +21,47 @@
 
 <script setup lang="ts">
 import { useForm } from "vee-validate";
+import { auth } from "@/firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { useToast } from "vue-toastification";
+import { useUserStore } from "@/stores/user";
+
+// Components
 import UiTextInput from "@/components/ui/UiTextInput.vue";
 import UiButton from "@/components/ui/UiButton.vue";
 import UiCard from "@/components/ui/UiCard.vue";
 
 const { handleSubmit, isSubmitting } = useForm();
+const toast = useToast();
+const userStore = useUserStore();
 
-const onSubmit = handleSubmit((values) => {
-  const stringValues = JSON.stringify(values);
-  console.log(`Form submitted: ${stringValues}`);
+/**
+ * onSubmit:
+ * Log in the user using Firebase Authentication with provided email and password.
+ * @version 1.0
+ * @since 1.0
+ * @author David Jurgens
+ */
+
+const onSubmit = handleSubmit(async (values) => {
+  try {
+    // Sign in to firebase
+    const userCredentials = await signInWithEmailAndPassword(
+      auth,
+      values.email,
+      values.password
+    );
+    // Add the credentials to the user store
+    userStore.$state = {
+      user: {
+        displayName: userCredentials.user.displayName,
+        email: userCredentials.user.email,
+        uid: userCredentials.user.uid,
+      },
+    };
+  } catch {
+    // Show a generic error message when something goes wrong while signing in
+    toast.error("Somthing went wrong when singing in, please try again");
+  }
 });
 </script>
