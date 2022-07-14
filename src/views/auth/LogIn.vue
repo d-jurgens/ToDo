@@ -23,7 +23,10 @@
 import { useRouter } from "vue-router";
 import { useForm } from "vee-validate";
 import { auth } from "@/firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {
+  signInWithEmailAndPassword,
+  sendEmailVerification,
+} from "firebase/auth";
 import { useToast } from "vue-toastification";
 import { useUserStore } from "@/stores/user";
 
@@ -54,14 +57,28 @@ const onSubmit = handleSubmit(async (values) => {
       values.password
     );
 
-    // Add the credentials to the user store
-    userStore.$state = {
-      displayName: userCredentials.user.displayName,
-      email: userCredentials.user.email,
-      uid: userCredentials.user.uid,
-      emailVerified: userCredentials.user.emailVerified,
-    };
-    router.push("/");
+    // Check if the user's email has been verified
+    if (!userCredentials.user.emailVerified) {
+      // If the email hasn't been verified, send the verification email
+      try {
+        sendEmailVerification(auth.currentUser);
+        toast.warning(
+          "Your email address has not yet been verified, please check your inbox"
+        );
+      } catch (error) {
+        toast.error(
+          "Somthing went wrong when sending the verification email" + error
+        );
+      }
+    } else {
+      // The email has been verified, add the user details to the user store
+      userStore.$state = {
+        displayName: userCredentials.user.displayName,
+        email: userCredentials.user.email,
+        uid: userCredentials.user.uid,
+      };
+      router.push("/");
+    }
   } catch {
     // Show a generic error message when something goes wrong while signing in
     toast.error("Somthing went wrong when singing in, please try again");
