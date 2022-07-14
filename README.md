@@ -8,11 +8,20 @@ A simple To Do app with basic authentication.
 ### Vue 3
 The app is built using the Vue 3 framework, using the Composition API.
 
+### Pinia
+
+#### Pinia Plugin Persistedstate
+[Github] (https://github.com/prazdevs/pinia-plugin-persistedstate)
+
 ### Tailwind CSS
 It uses Tailwind, mainly to get to know it and see if I like it.
 
 ### VeeValidate & Yup
 It uses VeeValidate and Yup for form validation.
+
+### Firebase
+#### Firebase/authentication
+#### Firebase/Firestore
 
 ## Scripts
 

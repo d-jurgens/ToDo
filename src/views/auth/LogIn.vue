@@ -53,11 +53,9 @@ const onSubmit = handleSubmit(async (values) => {
     );
     // Add the credentials to the user store
     userStore.$state = {
-      user: {
-        displayName: userCredentials.user.displayName,
-        email: userCredentials.user.email,
-        uid: userCredentials.user.uid,
-      },
+      displayName: userCredentials.user.displayName,
+      email: userCredentials.user.email,
+      uid: userCredentials.user.uid,
     };
   } catch {
     // Show a generic error message when something goes wrong while signing in
