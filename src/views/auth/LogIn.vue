@@ -61,10 +61,20 @@ const onSubmit = handleSubmit(async (values) => {
     if (!userCredentials.user.emailVerified) {
       // If the email hasn't been verified, send the verification email
       try {
-        sendEmailVerification(auth.currentUser);
-        toast.warning(
-          "Your email address has not yet been verified, please check your inbox"
-        );
+        if (auth.currentUser) {
+          // send the verification email
+          sendEmailVerification(auth.currentUser);
+
+          // Show a notification saying that the verification email has been sent
+          toast.warning(
+            "Your email address has not yet been verified, please check your inbox"
+          );
+        } else {
+          // User isn't signed in, show an error
+          toast.error(
+            "Somthing went wrong when sending the verification email, please try again"
+          );
+        }
       } catch (error) {
         toast.error(
           "Somthing went wrong when sending the verification email" + error
@@ -77,6 +87,8 @@ const onSubmit = handleSubmit(async (values) => {
         email: userCredentials.user.email,
         uid: userCredentials.user.uid,
       };
+
+      // Redirect to the homepage
       router.push("/");
     }
   } catch {
