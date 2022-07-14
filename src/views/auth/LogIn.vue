@@ -10,11 +10,7 @@
 
         <ui-input name="password" label="Password" type="password" />
 
-        <ui-button
-          label="Sign in"
-          :disabled="isSubmitting"
-          @clicked="onSubmit"
-        />
+        <ui-button label="Sign in" :disabled="isSubmitting" @click="onSubmit" />
       </form>
     </ui-card>
     <a href="#">Forgot your password?</a>
