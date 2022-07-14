@@ -2,28 +2,21 @@
   <div
     class="flex flex-col w-full min-h-screen justify-center items-center p-8 bg-lightest-gray"
   >
-    <h1 class="mb-2">Create a new account</h1>
-    <p class="mb-8">or <router-link to="login">log in</router-link></p>
+    <h1 class="mb-2">Reset your password</h1>
+    <p class="mb-8">
+      back to <router-link to="login">log in page</router-link>
+    </p>
     <ui-card>
       <form @submit="onSubmit">
-        <ui-text-input name="email" label="Email" type="email" />
-
-        <ui-text-input
-          name="username"
-          label="Username"
-          type="text"
-          :required="true"
-        />
-
         <ui-text-input
           name="password"
-          label="Password"
+          label="New password"
           type="text"
-          :required="true"
+          :requiered="true"
         />
 
         <ui-button
-          label="Create account"
+          label="Reset password"
           :loading="isSubmitting"
           @click="onSubmit"
         />

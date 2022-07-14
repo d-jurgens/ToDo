@@ -41,7 +41,7 @@ switch (props.type) {
     break;
 }
 
-if (!rules && props.required) {
+if (props.required) {
   rules = yup.string().required();
 }
 
