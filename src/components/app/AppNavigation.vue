@@ -74,15 +74,15 @@ async function logOut() {
     // Log out the user
     await signOut(auth);
 
+    // Redirect to login page
+    router.push("/login");
+
     // Reset the user store
     userStore.$state = {
       displayName: null,
       email: null,
       uid: null,
     };
-
-    // Redirect to login page
-    router.push("/login");
   } catch (error) {
     // Show an error if aything goes wrong
     toast.error("Somthing went wrong when singing out, please try again");

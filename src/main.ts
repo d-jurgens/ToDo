@@ -15,9 +15,17 @@ import {
   faBars,
   faCircleUser,
   faArrowRightFromBracket,
+  faCircleExclamation,
+  faCircleNotch,
 } from "@fortawesome/free-solid-svg-icons";
 
-library.add({ faBars, faCircleUser, faArrowRightFromBracket });
+library.add({
+  faBars,
+  faCircleUser,
+  faArrowRightFromBracket,
+  faCircleExclamation,
+  faCircleNotch,
+});
 
 import App from "./App.vue";
 import router from "./router";
