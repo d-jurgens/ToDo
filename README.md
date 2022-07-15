@@ -26,6 +26,9 @@ It uses VeeValidate and Yup for form validation.
 ### Vue-toastification
 [Documentation](https://openbase.com/js/vue-toastification)
 
+### Font Awesome
+[Documentation](https://fontawesome.com/docs/web/use-with/vue/)
+
 ## Scripts
 
 ### Project Setup

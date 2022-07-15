@@ -1,9 +1,12 @@
 <template>
-  <header class="flex justify-between shadow">
-    <span class="text-lg font-bold">ToDo</span>
-    <nav>
-      <a @click="logOut()">Log out</a>
-    </nav>
+  <header class="shadow py-4">
+    <div class="flex justify-between max-w-3xl mx-auto px-4">
+      <span class="text-lg font-bold">ToDo</span>
+      <nav>
+        <router-link to="account">My account</router-link>
+        <a @click="logOut()">Log out</a>
+      </nav>
+    </div>
   </header>
 </template>
 
@@ -25,7 +28,6 @@ async function logOut() {
       displayName: null,
       email: null,
       uid: null,
-      emailVerified: null,
     };
     router.push("/login");
   } catch (error) {
