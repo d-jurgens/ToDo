@@ -53,28 +53,38 @@ const userStore = useUserStore();
 
 const showDrowDown = ref(false);
 
-// document.onclick = function () {
-//   if (showDrowDown.value) {
-//     showDrowDown.value = false;
-//   }
-// };
-
+// Ref to identify the toggle button
 const dropDownToggle = ref(null);
 
+// Set showDropDown to false if click outside toggle button
 onClickOutside(dropDownToggle, () => {
   showDrowDown.value = false;
 });
 
+/**
+ * logOut:
+ * Log out the user.
+ * @version 1.0
+ * @since 1.0
+ * @author David Jurgens
+ */
+
 async function logOut() {
   try {
+    // Log out the user
     await signOut(auth);
+
+    // Reset the user store
     userStore.$state = {
       displayName: null,
       email: null,
       uid: null,
     };
+
+    // Redirect to login page
     router.push("/login");
   } catch (error) {
+    // Show an error if aything goes wrong
     toast.error("Somthing went wrong when singing out, please try again");
   }
 }
