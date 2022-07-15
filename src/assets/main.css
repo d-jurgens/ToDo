@@ -1,3 +1,37 @@
 @tailwind base;
+
+@layer base {
+    html {
+        @apply text-dark-gray;
+    }
+    h1 {
+        @apply text-5xl;
+        @apply font-bold;
+    }
+    h2 {
+        @apply text-4xl;
+        @apply font-bold;
+    }
+    h3 {
+        @apply text-3xl;
+        @apply font-bold;
+    }
+    h4 {
+        @apply text-2xl;
+        @apply font-bold;
+    }
+    h5 {
+        @apply text-xl;
+        @apply font-bold;
+    }
+    h6 {
+        @apply text-lg;
+        @apply font-bold;
+    }
+    a {
+        @apply text-violet-500;
+    }
+}
+
 @tailwind components;
 @tailwind utilities;
