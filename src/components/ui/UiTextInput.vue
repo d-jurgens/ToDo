@@ -1,11 +1,11 @@
 <template>
-  <label :for="props.name">{{ props.label }}</label>
+  <label v-if="label" :for="name">{{ label }}</label>
   <div>
     <input
-      :type="props.type"
+      :type="type"
       v-model="value"
       v-on="validationListeners"
-      :name="props.name"
+      :name="name"
       class="block w-full p-2 rounded border border-light-gray focus:border-light-gray focus:outline-none focus:ring focus:ring-primary-lighter"
       :class="errorMessage ? 'ring ring-error focus:ring-error' : ''"
     />
@@ -14,47 +14,35 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, toRef } from "vue";
 import { useField } from "vee-validate";
-import * as yup from "yup";
 
 interface Props {
   name: string;
   type: "password" | "email" | "text";
-  label: string;
+  label?: string;
   required?: boolean;
 }
 
 const props = defineProps<Props>();
 
-let rules: string | object = "";
+// Register the field. Rules set to `undefined` because they are set by useForm.
+const { value, errorMessage, handleChange } = useField(
+  toRef(props, "name"),
+  undefined,
+  {
+    validateOnValueUpdate: false,
+  }
+);
 
-switch (props.type) {
-  case "password":
-    rules = yup.string().required();
-    break;
-  case "email":
-    rules = yup.string().email().required();
-    break;
-  case "text":
-    rules = yup.string();
-    break;
-}
-
-if (props.required) {
-  rules = yup.string().required();
-}
-
-const { value, errorMessage, handleChange } = useField(props.name, rules, {
-  validateOnValueUpdate: false,
-});
-
+// Custom validation listener
 const validationListeners = computed(() => {
   // If the field is valid or have not been validated yet
   // lazy
   if (!errorMessage.value) {
     return {
-      blur: handleChange,
+      // disable `shouldValidate` on blur when there is no value or error message
+      blur: (e: string) => handleChange(e, false),
       change: handleChange,
       // disable `shouldValidate` to avoid validating on input
       input: (e: string) => handleChange(e, false),

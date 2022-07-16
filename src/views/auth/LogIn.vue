@@ -31,6 +31,7 @@ import {
 } from "firebase/auth";
 import { useToast } from "vue-toastification";
 import { useUserStore } from "@/stores/user";
+import * as yup from "yup";
 
 // Components
 import UiTextInput from "@/components/ui/UiTextInput.vue";
@@ -38,7 +39,6 @@ import UiButton from "@/components/ui/UiButton.vue";
 import UiCard from "@/components/ui/UiCard.vue";
 
 const router = useRouter();
-const { handleSubmit, isSubmitting } = useForm();
 const toast = useToast();
 const userStore = useUserStore();
 
@@ -49,6 +49,15 @@ const userStore = useUserStore();
  * @since 1.0
  * @author David Jurgens
  */
+
+const schema = yup.object({
+  email: yup.string().required().email(),
+  password: yup.string().required(),
+});
+
+const { handleSubmit, isSubmitting } = useForm({
+  validationSchema: schema,
+});
 
 const onSubmit = handleSubmit(async (values) => {
   try {

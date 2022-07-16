@@ -2,14 +2,14 @@
   <input
     type="checkbox"
     :name="'completed-' + item.id"
-    class="mr-4 text-primary rounded border-dark-gray w-6 h-6 hover:cursor-pointer focus:ring-primary-lighter"
+    class="mr-4 text-primary rounded border-light-gray border-2 w-6 h-6 hover:cursor-pointer focus:ring-primary-lighter"
     :checked="item.completed"
     @input="updateCompleted"
   />
   <label :for="'completed-' + item.id" class="mr-4 grow">
     {{ item.title }}
   </label>
-  <div>
+  <div class="min-w-max">
     <font-awesome-icon
       icon="fa-solid fa-pen"
       class="text-medium-gray mr-4 hover:cursor-pointer hover:text-primary transition-colors"

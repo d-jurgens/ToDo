@@ -40,10 +40,17 @@ import { useToast } from "vue-toastification";
 import UiTextInput from "@/components/ui/UiTextInput.vue";
 import UiButton from "@/components/ui/UiButton.vue";
 import UiCard from "@/components/ui/UiCard.vue";
+import * as yup from "yup";
 
 const toast = useToast();
 
-const { handleSubmit, isSubmitting } = useForm();
+const schema = yup.object({
+  email: yup.string().required().email(),
+});
+
+const { handleSubmit, isSubmitting } = useForm({
+  validationSchema: schema,
+});
 
 const requestSuccessfull = ref(false);
 

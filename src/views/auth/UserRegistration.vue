@@ -55,6 +55,7 @@ import { auth } from "@/firebase";
 import { useToast } from "vue-toastification";
 import { setDoc, doc, serverTimestamp } from "firebase/firestore";
 import { db } from "@/firebase";
+import * as yup from "yup";
 
 // Components
 import UiTextInput from "@/components/ui/UiTextInput.vue";
@@ -62,7 +63,16 @@ import UiButton from "@/components/ui/UiButton.vue";
 import UiCard from "@/components/ui/UiCard.vue";
 
 const toast = useToast();
-const { handleSubmit, isSubmitting } = useForm();
+
+const schema = yup.object({
+  email: yup.string().required().email(),
+  username: yup.string().required().min(3),
+  password: yup.string().required().min(6),
+});
+
+const { handleSubmit, isSubmitting } = useForm({
+  validationSchema: schema,
+});
 
 const registrationSuccessfull = ref(false);
 
