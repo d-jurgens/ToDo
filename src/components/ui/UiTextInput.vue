@@ -7,14 +7,14 @@
       v-on="validationListeners"
       :name="name"
       class="block w-full p-2 rounded border border-light-gray focus:border-light-gray focus:outline-none focus:ring focus:ring-primary-lighter"
-      :class="errorMessage ? 'ring ring-error focus:ring-error' : ''"
+      :class="reactiveClasses"
     />
     <span class="text-error text-sm">{{ errorMessage }}</span>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, toRef } from "vue";
+import { computed, ref, toRef, watch } from "vue";
 import { useField } from "vee-validate";
 
 interface Props {
@@ -22,6 +22,7 @@ interface Props {
   type: "password" | "email" | "text";
   label?: string;
   required?: boolean;
+  compact?: boolean;
 }
 
 const props = defineProps<Props>();
@@ -34,6 +35,25 @@ const { value, errorMessage, handleChange } = useField(
     validateOnValueUpdate: false,
   }
 );
+
+// Reactive classes
+const reactiveClasses = ref("");
+
+if (props.compact) {
+  reactiveClasses.value = "py-0 ";
+}
+
+watch(errorMessage, () => {
+  if (errorMessage.value && props.compact) {
+    reactiveClasses.value = "ring ring-error focus:ring-error py-0";
+  } else if (!errorMessage.value && props.compact) {
+    reactiveClasses.value = "py-0";
+  } else if (errorMessage.value && !props.compact) {
+    reactiveClasses.value = "ring ring-error focus:ring-error";
+  } else {
+    reactiveClasses.value = "";
+  }
+});
 
 // Custom validation listener
 const validationListeners = computed(() => {
