@@ -8,7 +8,9 @@
     </p>
     <ui-card v-if="!requestSuccessfull">
       <form @submit="onSubmit">
-        <ui-text-input name="email" label="Email" type="email" />
+        <div class="mb-4">
+          <ui-text-input name="email" label="Email" type="email" />
+        </div>
 
         <ui-button
           label="Reset password"

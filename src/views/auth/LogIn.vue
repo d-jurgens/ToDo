@@ -7,11 +7,13 @@
       or <router-link to="register">create an account</router-link>
     </p>
     <ui-card>
-      <form @submit="onSubmit">
-        <ui-text-input name="email" label="Email" type="email" />
-
-        <ui-text-input name="password" label="Password" type="password" />
-
+      <form @submit="onSubmit" class="w-80 max-w-full">
+        <div class="mb-4">
+          <ui-text-input name="email" label="Email" type="email" />
+        </div>
+        <div class="mb-4">
+          <ui-text-input name="password" label="Password" type="password" />
+        </div>
         <ui-button label="Sign in" :loading="isSubmitting" @click="onSubmit" />
       </form>
     </ui-card>

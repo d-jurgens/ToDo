@@ -5,22 +5,26 @@
     <h1 class="mb-2">Create a new account</h1>
     <p class="mb-8">or <router-link to="login">log in</router-link></p>
     <ui-card v-if="!registrationSuccessfull">
-      <form @submit="onSubmit">
-        <ui-text-input name="email" label="Email" type="email" />
-
-        <ui-text-input
-          name="username"
-          label="Username"
-          type="text"
-          :required="true"
-        />
-
-        <ui-text-input
-          name="password"
-          label="Password"
-          type="text"
-          :required="true"
-        />
+      <form @submit="onSubmit" class="w-80 max-w-full">
+        <div class="mb-4">
+          <ui-text-input name="email" label="Email" type="email" />
+        </div>
+        <div class="mb-4">
+          <ui-text-input
+            name="username"
+            label="Username"
+            type="text"
+            :required="true"
+          />
+        </div>
+        <div class="mb-4">
+          <ui-text-input
+            name="password"
+            label="Password"
+            type="text"
+            :required="true"
+          />
+        </div>
 
         <ui-button
           label="Create account"
@@ -49,6 +53,8 @@ import {
 } from "firebase/auth";
 import { auth } from "@/firebase";
 import { useToast } from "vue-toastification";
+import { setDoc, doc, serverTimestamp } from "firebase/firestore";
+import { db } from "@/firebase";
 
 // Components
 import UiTextInput from "@/components/ui/UiTextInput.vue";
@@ -56,7 +62,6 @@ import UiButton from "@/components/ui/UiButton.vue";
 import UiCard from "@/components/ui/UiCard.vue";
 
 const toast = useToast();
-
 const { handleSubmit, isSubmitting } = useForm();
 
 const registrationSuccessfull = ref(false);
@@ -77,6 +82,11 @@ const onSubmit = handleSubmit(async (values) => {
       values.email,
       values.password
     );
+
+    // Create their ToDo doc
+    await setDoc(doc(db, "todos/", userCredential.user.uid), {
+      createdAt: serverTimestamp(),
+    });
 
     // Check if the user has been created, the user should now be logged in
     if (userCredential && auth.currentUser) {

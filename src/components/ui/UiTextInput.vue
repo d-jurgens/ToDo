@@ -1,12 +1,12 @@
 <template>
   <label :for="props.name">{{ props.label }}</label>
-  <div class="mb-4">
+  <div>
     <input
       :type="props.type"
       v-model="value"
       v-on="validationListeners"
       :name="props.name"
-      class="block mb-1 w-80 p-2 rounded border border-light-gray focus:outline-none focus:ring focus:ring-primary-hover"
+      class="block w-full p-2 rounded border border-light-gray focus:border-light-gray focus:outline-none focus:ring focus:ring-primary-lighter"
       :class="errorMessage ? 'ring ring-error focus:ring-error' : ''"
     />
     <span class="text-error text-sm">{{ errorMessage }}</span>

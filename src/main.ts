@@ -17,6 +17,8 @@ import {
   faArrowRightFromBracket,
   faCircleExclamation,
   faCircleNotch,
+  faTrashCan,
+  faPen,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add({
@@ -25,6 +27,8 @@ library.add({
   faArrowRightFromBracket,
   faCircleExclamation,
   faCircleNotch,
+  faTrashCan,
+  faPen,
 });
 
 import App from "./App.vue";

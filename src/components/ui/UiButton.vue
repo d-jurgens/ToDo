@@ -2,7 +2,7 @@
   <button
     type="submit"
     :disabled="props.loading"
-    class="py-1 px-4 rounded bg-primary text-sm text-white font-bold uppercase tracking-wide cursor-pointer hover:bg-primary-darker focus:outline-none focus:ring focus:ring-primary-lighter transition-colors"
+    class="py-[11px] px-4 min-w-max rounded bg-primary text-sm text-white font-bold uppercase tracking-wide cursor-pointer hover:bg-primary-darker focus:outline-none focus:ring focus:ring-primary-lighter transition-colors"
     :class="colorClasses"
   >
     <font-awesome-icon
