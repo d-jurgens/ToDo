@@ -1,5 +1,5 @@
 <template>
-  <TransitionGroup name="list" tag="ul">
+  <TransitionGroup name="list" tag="ul" v-if="items">
     <li
       v-for="item in items"
       :key="item.id"

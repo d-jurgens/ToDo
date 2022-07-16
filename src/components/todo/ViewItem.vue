@@ -10,16 +10,38 @@
     {{ item.title }}
   </label>
   <div>
-    <font-awesome-icon icon="fa-solid fa-pen" class="text-medium-gray mr-4" />
-    <font-awesome-icon icon="fa-solid fa-trash-can" class="text-medium-gray" />
+    <font-awesome-icon
+      icon="fa-solid fa-pen"
+      class="text-medium-gray mr-4 hover:cursor-pointer hover:text-primary transition-colors"
+    />
+    <font-awesome-icon
+      icon="fa-solid fa-trash-can"
+      class="text-medium-gray hover:cursor-pointer hover:text-primary transition-colors"
+      @click="showDeleteDialog = true"
+    />
   </div>
+  <ui-dialog
+    v-if="showDeleteDialog"
+    :title="'Delete: ' + item.title"
+    text="Are you sure you want to delete this item? This cannot be undone."
+    type="danger"
+    accept-text="Delete item"
+    @on-cancel="showDeleteDialog = false"
+    @on-accept="onDelete"
+  />
 </template>
 
 <script setup lang="ts">
-import { doc, updateDoc } from "firebase/firestore";
+import { ref } from "vue";
+import { doc, updateDoc, deleteDoc } from "firebase/firestore";
 import { db } from "@/firebase";
 import { useUserStore } from "@/stores/user";
+import { useToast } from "vue-toastification";
 
+// Components
+import UiDialog from "@/components/ui/UiDialog.vue";
+
+const toast = useToast();
 const userStore = useUserStore();
 
 interface Props {
@@ -37,5 +59,19 @@ async function updateCompleted() {
   await updateDoc(docRef, {
     completed: !props.item.completed,
   });
+}
+
+const showDeleteDialog = ref(false);
+
+async function onDelete() {
+  showDeleteDialog.value = false;
+  try {
+    await deleteDoc(
+      doc(db, "todos/" + userStore.uid + "/items", props.item.id)
+    );
+    toast.success("The item was deleted");
+  } catch (error) {
+    toast.error("Somthing went wrong when trying to delete the item" + error);
+  }
 }
 </script>
