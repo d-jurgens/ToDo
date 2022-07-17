@@ -2,6 +2,9 @@
 module.exports = {
   content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
   theme: {
+    fontFamily: {
+      nunito: ["Nunito", "sans-serif"]
+    },
     extend: {
       colors: {
         success: "#059669",

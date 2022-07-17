@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "../views/HomeView.vue";
-import { auth } from "@/firebase";
+import { getCurrentUser } from "@/firebase";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -8,7 +7,10 @@ const router = createRouter({
     {
       path: "/",
       name: "home",
-      component: HomeView,
+      component: () => import("../views/HomeView.vue"),
+      meta: {
+        requiresAuth: true,
+      },
     },
     {
       path: "/login",
@@ -29,21 +31,19 @@ const router = createRouter({
       path: "/account",
       name: "account",
       component: () => import("../views/AccountView.vue"),
+      meta: {
+        requiresAuth: true,
+      },
     },
   ],
 });
 
-router.beforeEach(async (to) => {
-  if (
-    // make sure the user is authenticated
-    !auth.currentUser &&
-    // ❗️ Avoid an infinite redirect
-    to.name !== "login" &&
-    to.name !== "register" &&
-    to.name !== "forgot-password"
-  ) {
-    // redirect the user to the login page
-    return { name: "login" };
+router.beforeEach(async (to, from, next) => {
+  const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
+  if (requiresAuth && !(await getCurrentUser())) {
+    next("login");
+  } else {
+    next();
   }
 });
 
