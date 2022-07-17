@@ -1,7 +1,7 @@
 <template>
-  <header class="shadow py-4">
+  <header class="shadow py-4 bg-primary text-white">
     <div class="flex justify-between max-w-3xl mx-auto px-4">
-      <router-link to="/" class="text-lg font-bold text-dark-gray"
+      <router-link to="/" class="text-lg font-bold text-white"
         >ToDo</router-link
       >
       <nav class="relative">
@@ -17,14 +17,14 @@
         >
           <router-link to="account">
             <div
-              class="p-2 border-b border-lightest-gray hover:bg-lightest-gray transition-colors"
+              class="py-2 px-4 border-b border-lightest-gray hover:bg-lightest-gray transition-colors"
             >
               <font-awesome-icon icon="fa-solid fa-circle-user" class="mr-2" />
               My account
             </div>
           </router-link>
           <a @click="logOut()" class="hover:cursor-pointer">
-            <div class="p-2 hover:bg-lightest-gray transition-colors">
+            <div class="py-2 px-4 hover:bg-lightest-gray transition-colors">
               <font-awesome-icon
                 icon="fa-solid fa-arrow-right-from-bracket"
                 class="mr-2"

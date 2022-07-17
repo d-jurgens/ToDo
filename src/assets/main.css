@@ -4,6 +4,9 @@
     html {
         @apply text-dark-gray;
     }
+    body {
+        @apply bg-lightest-gray;
+    }
     h1 {
         @apply text-5xl;
         @apply font-bold;
@@ -29,7 +32,7 @@
         @apply font-bold;
     }
     a {
-        @apply text-violet-500;
+        @apply text-primary;
     }
 }
 

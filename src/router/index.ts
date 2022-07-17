@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
+import { auth } from "@/firebase";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -30,6 +31,20 @@ const router = createRouter({
       component: () => import("../views/AccountView.vue"),
     },
   ],
+});
+
+router.beforeEach(async (to) => {
+  if (
+    // make sure the user is authenticated
+    !auth.currentUser &&
+    // ❗️ Avoid an infinite redirect
+    to.name !== "login" &&
+    to.name !== "register" &&
+    to.name !== "forgot-password"
+  ) {
+    // redirect the user to the login page
+    return { name: "login" };
+  }
 });
 
 export default router;

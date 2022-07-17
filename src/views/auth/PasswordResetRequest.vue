@@ -1,14 +1,16 @@
 <template>
   <div
-    class="flex flex-col w-full min-h-screen justify-center items-center p-8 bg-lightest-gray"
+    class="flex flex-col w-full min-h-screen justify-center items-center px-4 py-10 bg-lightest-gray"
   >
-    <h1 class="mb-2">Reset your password</h1>
+    <h1 class="mb-2 text-center">Reset your password</h1>
     <p class="mb-8">
       back to <router-link to="login">log in page</router-link>
     </p>
-    <ui-card v-if="!requestSuccessfull">
-      <form @submit="onSubmit">
-        <ui-text-input name="email" label="Email" type="email" />
+    <ui-card v-if="!requestSuccessfull" class="max-w-full">
+      <form @submit="onSubmit" class="w-80 max-w-full">
+        <div class="mb-4">
+          <ui-text-input name="email" label="Email" type="email" />
+        </div>
 
         <ui-button
           label="Reset password"
@@ -38,10 +40,17 @@ import { useToast } from "vue-toastification";
 import UiTextInput from "@/components/ui/UiTextInput.vue";
 import UiButton from "@/components/ui/UiButton.vue";
 import UiCard from "@/components/ui/UiCard.vue";
+import * as yup from "yup";
 
 const toast = useToast();
 
-const { handleSubmit, isSubmitting } = useForm();
+const schema = yup.object({
+  email: yup.string().required().email(),
+});
+
+const { handleSubmit, isSubmitting } = useForm({
+  validationSchema: schema,
+});
 
 const requestSuccessfull = ref(false);
 

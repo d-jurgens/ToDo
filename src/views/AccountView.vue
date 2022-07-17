@@ -10,7 +10,7 @@
     <ui-dialog
       v-if="showDeleteDialog"
       title="Delete account"
-      text="Are you sure you want to delete your account? All your ToDo's will be deleted too. This cannot be undone."
+      text="Are you sure you want to delete your account? You will lose access to all your items. This cannot be undone."
       accept-text="Delete account"
       type="danger"
       :loading="deletingUser"

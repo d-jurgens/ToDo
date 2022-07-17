@@ -1,17 +1,19 @@
 <template>
   <div
-    class="flex flex-col w-full min-h-screen justify-center items-center p-8 bg-lightest-gray"
+    class="max-w-3xl mx-auto px-4 py-10 flex flex-col w-full min-h-screen justify-center items-center bg-lightest-gray"
   >
-    <h1 class="mb-2">Sign in to your account</h1>
+    <h1 class="mb-2 text-center">Sign in to your account</h1>
     <p class="mb-8">
       or <router-link to="register">create an account</router-link>
     </p>
-    <ui-card>
-      <form @submit="onSubmit">
-        <ui-text-input name="email" label="Email" type="email" />
-
-        <ui-text-input name="password" label="Password" type="password" />
-
+    <ui-card class="max-w-full">
+      <form @submit="onSubmit" class="w-80 max-w-full">
+        <div class="mb-4">
+          <ui-text-input name="email" label="Email" type="email" />
+        </div>
+        <div class="mb-4">
+          <ui-text-input name="password" label="Password" type="password" />
+        </div>
         <ui-button label="Sign in" :loading="isSubmitting" @click="onSubmit" />
       </form>
     </ui-card>
@@ -29,6 +31,7 @@ import {
 } from "firebase/auth";
 import { useToast } from "vue-toastification";
 import { useUserStore } from "@/stores/user";
+import * as yup from "yup";
 
 // Components
 import UiTextInput from "@/components/ui/UiTextInput.vue";
@@ -36,7 +39,6 @@ import UiButton from "@/components/ui/UiButton.vue";
 import UiCard from "@/components/ui/UiCard.vue";
 
 const router = useRouter();
-const { handleSubmit, isSubmitting } = useForm();
 const toast = useToast();
 const userStore = useUserStore();
 
@@ -47,6 +49,15 @@ const userStore = useUserStore();
  * @since 1.0
  * @author David Jurgens
  */
+
+const schema = yup.object({
+  email: yup.string().required().email(),
+  password: yup.string().required(),
+});
+
+const { handleSubmit, isSubmitting } = useForm({
+  validationSchema: schema,
+});
 
 const onSubmit = handleSubmit(async (values) => {
   try {

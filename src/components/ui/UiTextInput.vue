@@ -1,60 +1,73 @@
 <template>
-  <label :for="props.name">{{ props.label }}</label>
-  <div class="mb-4">
+  <label v-if="label" :for="name">{{ label }}</label>
+  <div>
     <input
-      :type="props.type"
+      :type="type"
       v-model="value"
       v-on="validationListeners"
-      :name="props.name"
-      class="block mb-1 w-80 p-2 rounded border border-light-gray focus:outline-none focus:ring focus:ring-primary-hover"
-      :class="errorMessage ? 'ring ring-error focus:ring-error' : ''"
+      :name="name"
+      class="block w-full p-2 rounded border border-light-gray focus:border-light-gray focus:outline-none focus:ring focus:ring-primary-lighter"
+      :class="reactiveClasses"
     />
-    <span class="text-error text-sm">{{ errorMessage }}</span>
+    <Transition name="slide-fade">
+      <span v-if="errorMessage" class="text-error text-sm">
+        {{ errorMessage }}
+      </span>
+    </Transition>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, ref, toRef, watch } from "vue";
 import { useField } from "vee-validate";
-import * as yup from "yup";
 
 interface Props {
   name: string;
   type: "password" | "email" | "text";
-  label: string;
+  label?: string;
   required?: boolean;
+  compact?: boolean;
 }
 
 const props = defineProps<Props>();
 
-let rules: string | object = "";
+// Register the field. Rules set to `undefined` because they are set by useForm.
+const { value, errorMessage, handleChange } = useField(
+  toRef(props, "name"),
+  undefined,
+  {
+    validateOnValueUpdate: false,
+  }
+);
 
-switch (props.type) {
-  case "password":
-    rules = yup.string().required();
-    break;
-  case "email":
-    rules = yup.string().email().required();
-    break;
-  case "text":
-    rules = yup.string();
-    break;
+// Reactive classes
+const reactiveClasses = ref("");
+
+if (props.compact) {
+  reactiveClasses.value = "py-0 ";
 }
 
-if (props.required) {
-  rules = yup.string().required();
-}
-
-const { value, errorMessage, handleChange } = useField(props.name, rules, {
-  validateOnValueUpdate: false,
+// Watch for changes in errorMessage and change the classes if needed
+watch(errorMessage, () => {
+  if (errorMessage.value && props.compact) {
+    reactiveClasses.value = "ring ring-error focus:ring-error py-0";
+  } else if (!errorMessage.value && props.compact) {
+    reactiveClasses.value = "py-0";
+  } else if (errorMessage.value && !props.compact) {
+    reactiveClasses.value = "ring ring-error focus:ring-error";
+  } else {
+    reactiveClasses.value = "";
+  }
 });
 
+// Custom validation listener
 const validationListeners = computed(() => {
   // If the field is valid or have not been validated yet
   // lazy
   if (!errorMessage.value) {
     return {
-      blur: handleChange,
+      // disable `shouldValidate` on blur when there is no value or error message
+      blur: (e: string) => handleChange(e, false),
       change: handleChange,
       // disable `shouldValidate` to avoid validating on input
       input: (e: string) => handleChange(e, false),
@@ -68,3 +81,13 @@ const validationListeners = computed(() => {
   };
 });
 </script>
+
+<style lang="css">
+.slide-fade-enter-active {
+  transition: all 0.3s ease-out;
+}
+
+.slide-fade-enter-from {
+  opacity: 0;
+}
+</style>
