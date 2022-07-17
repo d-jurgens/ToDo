@@ -1,45 +1,61 @@
 # ToDo
+[![Netlify Status](https://api.netlify.com/api/v1/badges/c87ec497-c046-4f0b-a727-ff4ac0a054b7/deploy-status)](https://app.netlify.com/sites/davidjurgens-todo/deploys)
 
-This template should help get you started developing with Vue 3 in Vite.
+A simple To Do app with basic authentication. 
 
-## Recommended IDE Setup
+## Libraries and Frameworks
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+### Vue 3
+The app is built using the [Vue 3 framework](https://vuejs.org/), using the [Composition API](https://vuejs.org/guide/introduction.html).
 
-## Type Support for `.vue` Imports in TS
+### Pinia
+The store library it uses is [Pinia](https://pinia.vuejs.org/introduction.html).
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+#### Pinia Plugin Persistedstate
+For store persistance it uses [Pinia Plugin Persistedstate](https://github.com/prazdevs/pinia-plugin-persistedstate)
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+### Tailwind CSS
+It uses [Tailwind](https://tailwindcss.com/docs/installation), mainly to get to know it and see if I like it.
 
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+### VeeValidate & Yup
+It uses [VeeValidate](https://vee-validate.logaretm.com/v4/) and [Yup](https://github.com/jquense/yup) for form validation.
 
-## Customize configuration
+### Firebase
+#### Firebase/authentication
+[Firebase Authentication](https://firebase.google.com/docs/auth) handles the authentication.
+#### Firebase/Firestore
+It uses [Cloud Firestore](https://firebase.google.com/docs/firestore) as its database.
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+### Vue-toastification
+To simplify notifications it uses [Vue Toastification](https://openbase.com/js/vue-toastification)
 
-## Project Setup
+### Font Awesome
+Icons used are from [Font Awesome](https://fontawesome.com/docs/web/use-with/vue/)
+
+### VueUse
+It uses the `onClickOutside` directive from [VueUse](https://vueuse.org/) to simplify handling closing menus and dialogs when clicking outside the element.
+
+## Scripts
+
+### Project Setup
 
 ```sh
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+#### Compile and Hot-Reload for Development
 
 ```sh
 npm run dev
 ```
 
-### Type-Check, Compile and Minify for Production
+#### Type-Check, Compile and Minify for Production
 
 ```sh
 npm run build
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+#### Lint with [ESLint](https://eslint.org/)
 
 ```sh
 npm run lint

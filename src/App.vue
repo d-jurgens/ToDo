@@ -1,14 +1,14 @@
 <template>
-    <header>
-        <nav>
-            <RouterLink to="/">Home</RouterLink>
-            <RouterLink to="/about">About</RouterLink>
-        </nav>
-    </header>
-
-    <RouterView />
+  <app-navigation v-if="userStore.uid" />
+  <RouterView />
 </template>
 
 <script setup lang="ts">
-import { RouterLink, RouterView } from "vue-router";
+import { RouterView } from "vue-router";
+import { useUserStore } from "./stores/user";
+
+// Components
+import AppNavigation from "@/components/app/AppNavigation.vue";
+
+const userStore = useUserStore();
 </script>
