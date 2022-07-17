@@ -9,7 +9,11 @@
       class="block w-full p-2 rounded border border-light-gray focus:border-light-gray focus:outline-none focus:ring focus:ring-primary-lighter"
       :class="reactiveClasses"
     />
-    <span class="text-error text-sm">{{ errorMessage }}</span>
+    <Transition name="slide-fade">
+      <span v-if="errorMessage" class="text-error text-sm">
+        {{ errorMessage }}
+      </span>
+    </Transition>
   </div>
 </template>
 
@@ -76,3 +80,13 @@ const validationListeners = computed(() => {
   };
 });
 </script>
+
+<style lang="css">
+.slide-fade-enter-active {
+  transition: all 0.3s ease-out;
+}
+
+.slide-fade-enter-from {
+  opacity: 0;
+}
+</style>
