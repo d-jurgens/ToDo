@@ -44,6 +44,7 @@ const emits = defineEmits(["onAccept", "onCancel"]);
 
 const dialog = ref(null);
 
+// Emit onCancel when clicking outside the dialog ref
 onClickOutside(dialog, () => {
   emits("onCancel");
 });

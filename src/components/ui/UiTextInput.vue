@@ -47,6 +47,7 @@ if (props.compact) {
   reactiveClasses.value = "py-0 ";
 }
 
+// Watch for changes in errorMessage and change the classes if needed
 watch(errorMessage, () => {
   if (errorMessage.value && props.compact) {
     reactiveClasses.value = "ring ring-error focus:ring-error py-0";

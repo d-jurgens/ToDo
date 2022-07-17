@@ -33,6 +33,7 @@ const props = defineProps<Props>();
 
 const colorClasses = ref("");
 
+// Add the relative classes to the colorClasses based on the color selected
 switch (props.color) {
   case "primary-lighter":
     colorClasses.value = "bg-primary-lighter hover:bg-primary";

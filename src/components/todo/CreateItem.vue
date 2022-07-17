@@ -30,16 +30,28 @@ import UiTextInput from "@/components/ui/UiTextInput.vue";
 const toast = useToast();
 const userStore = useUserStore();
 
+/**
+ * onSubmit:
+ * Create the new item.
+ * @version 1.0
+ * @since 1.0
+ * @author David Jurgens
+ */
+
+// Set up the validation schema
 const schema = yup.object({
   title: yup.string().required(),
 });
 
+// Register the form
 const { handleSubmit, isSubmitting, resetForm } = useForm({
   validationSchema: schema,
 });
 
+// Handle the form submission
 const onSubmit = handleSubmit(async (values) => {
   try {
+    // Create the new item
     await addDoc(collection(db, "todos/" + userStore.uid + "/items"), {
       title: values.title,
       completed: false,
@@ -52,10 +64,10 @@ const onSubmit = handleSubmit(async (values) => {
     // Reset the form
     resetForm();
   } catch (error) {
+    // Show an error if something goes wrong
     toast.error(
       "Somthing went wrong when creating your item, please try again. " + error
     );
-    console.log(error);
   }
 });
 </script>

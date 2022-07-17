@@ -32,10 +32,13 @@ interface Item {
 
 const items: Ref<Item[]> = ref([]);
 
+// Create the query. Order the items by createdAt
 const q = query(
   collection(db, "todos/" + userStore.uid + "/items"),
   orderBy("createdAt", "desc")
 );
+
+// Subscribe to the items collection.
 const unsubscribe = onSnapshot(q, (querySnapshot) => {
   items.value = [];
   querySnapshot.forEach((doc) => {
@@ -48,6 +51,7 @@ const unsubscribe = onSnapshot(q, (querySnapshot) => {
   });
 });
 
+// Unsubscribe when the component is unmounted
 onUnmounted(() => {
   unsubscribe();
 });
