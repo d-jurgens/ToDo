@@ -1,10 +1,23 @@
 <template>
   <div
-    class="flex flex-col w-full min-h-screen justify-center items-center p-8 bg-lightest-gray"
+    class="flex flex-col w-full min-h-screen justify-center items-center px-4 py-10 bg-lightest-gray"
   >
-    <h1 class="mb-2">Create a new account</h1>
+    <h1 class="mb-2 text-center">Create a new account</h1>
     <p class="mb-8">or <router-link to="login">log in</router-link></p>
-    <ui-card v-if="!registrationSuccessfull">
+    <ui-card class="mb-4 max-w-full w-80">
+      <div class="text-center mb-2">
+        <font-awesome-icon
+          icon="fa-circle-exclamation"
+          class="text-error text-4xl"
+        />
+      </div>
+      <p class="text-center">
+        This is a test project. It is functional, but it is not actively
+        maintained and any data can be deleted at any point.
+      </p>
+    </ui-card>
+
+    <ui-card v-if="!registrationSuccessfull" class="max-w-full">
       <form @submit="onSubmit" class="w-80 max-w-full">
         <div class="mb-4">
           <ui-text-input name="email" label="Email" type="email" />

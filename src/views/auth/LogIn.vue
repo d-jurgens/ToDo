@@ -1,12 +1,12 @@
 <template>
   <div
-    class="flex flex-col w-full min-h-screen justify-center items-center p-8 bg-lightest-gray"
+    class="max-w-3xl mx-auto px-4 py-10 flex flex-col w-full min-h-screen justify-center items-center bg-lightest-gray"
   >
-    <h1 class="mb-2">Sign in to your account</h1>
+    <h1 class="mb-2 text-center">Sign in to your account</h1>
     <p class="mb-8">
       or <router-link to="register">create an account</router-link>
     </p>
-    <ui-card>
+    <ui-card class="max-w-full">
       <form @submit="onSubmit" class="w-80 max-w-full">
         <div class="mb-4">
           <ui-text-input name="email" label="Email" type="email" />
